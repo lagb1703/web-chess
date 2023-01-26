@@ -1,4 +1,7 @@
+
+/*Esta clase contiene funciones de encriptacion y desencriptacion*/
 class encriptador{
+
     static desplazamiento(str, n){
         return [...str].map((l)=>{
             return String.fromCodePoint(l.charCodeAt(0) + n);
@@ -6,7 +9,7 @@ class encriptador{
     }
 
     static reemplazo(str){
-        let palabraClave = "calumbrientosCALUMBRITOS";
+        let palabraClave = "calumbrientosCALUBRIENTOS";
         return [...str].map((l)=>{
             for(let i = 0; palabraClave[i] != undefined; i++){
                 if(palabraClave[i] == l){
@@ -18,7 +21,7 @@ class encriptador{
     }
 
     static revertir(str){
-        let palabraClave = "calumbrientosCALUMBRITOS";
+        let palabraClave = "calumbrientosCALUBRIENTOS";
         return [...str].map((l)=>{
             for(let i = 0; palabraClave[i] != undefined; i++){
                 if(i == l.charCodeAt(0)){
@@ -37,5 +40,6 @@ class encriptador{
         return encriptador.desplazamiento(encriptador.revertir(encriptador.desplazamiento(str, -6)), -1);
     }
 }
-
+let encriptado = encriptador.enmascarador("123");
+console.log(encriptado);
 export  {encriptador};

@@ -137,6 +137,12 @@ class modoJuego{
             bounds = document.getElementById("tablero").getBoundingClientRect();
             this.imprimir();
         });
+        document.getElementsByClassName("selector")[0].addEventListener("click",()=>{
+            setTimeout(()=>{
+                bounds = document.getElementById("tablero").getBoundingClientRect();
+                this.imprimir();
+            }, 1000);
+        });
         this.logicaGrafica();
     }
 
@@ -152,6 +158,7 @@ class modoJuego{
 
     set tablero(tablero){
         let tab = document.getElementById("tablero");
+        tab.innerHTML = "";
         for(let i = 0; i < 64; i++){
             if(tablero[i] instanceof objeto){
                 let cas = tablero[i];

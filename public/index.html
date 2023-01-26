@@ -107,12 +107,26 @@
                             <input type="radio" name="modoJuego" id="FIDE">
                         </div>
                     </div>
+                    <div>
+                        <h4 class="texto">Vista del tablero</h4>
+                        <div class="opcion">
+                            <div>
+                                <label for="blanco">blanco</label>
+                                <input type="radio" name="vista" id="blanco" checked>
+                            </div>
+                            <div>
+                                <label for="negro">negro</label>
+                                <input type="radio" name="vista" id="negro" checked>
+                            </div>
+                        </div>
+                    </div>
                     <div class="opcion texts">
                         <input type="text" name="name" id="Nombre" placeholder="Nombre provicional">
                         <input type="number" name="name" id="Partida" placeholder="Id de la partida online" disabled>
                     </div>
-                    <div class="opcion">
-                        <button id="crear">Crear partida</button>
+                    <div class="opcion botones">
+                        <button class="bn" id="crearPartida">Crear partida</button>
+                        <button class="bn" id="unirsePartida" disabled>Unirse a partida</button>
                     </div>
                 </div>
             </form>
