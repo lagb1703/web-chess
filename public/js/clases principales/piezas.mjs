@@ -178,7 +178,7 @@ class peon extends pieza{
     mover(pos, tablero){
         super.mover(pos, tablero);
         if(pos < 8 || pos > 55){
-            this.coronar();
+            this.coronar(this);
         }
     }
 

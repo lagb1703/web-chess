@@ -24,6 +24,16 @@
                 document.getElementById("us").href = "/html/user.html";
             }
         }
+        var bPreguntar = true;
+     
+        window.onbeforeunload = preguntarAntesDeSalir;
+        
+        function preguntarAntesDeSalir()
+        {
+        if (bPreguntar)
+        console.log("pepe");
+            return "¿Seguro que quieres salir?";
+        }
     </script>
     <link rel="stylesheet" onload="__colorPermanente()" href="/css/estilos/estilo_verde.css" id="color">
     <link rel="stylesheet" href="/css/general.css">
@@ -72,7 +82,7 @@
                 <div id="tablero">
                 </div>
             </div>
-            <form action="" class="formulario">
+            <form action="" class="formulario desselecionado">
                 <div class="selector">
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
@@ -80,29 +90,29 @@
                     <div class="opcion">
                         <div>
                             <label for="Online">Online</label>
-                            <input type="radio" name="tipoJuego" id="Online">
+                            <input type="radio" name="tipoJuego" id="Online" >
                         </div>
                         <div>
                             <label for="Local">Local</label>
-                            <input type="radio" name="tipoJuego" id="Local">
+                            <input type="radio" name="tipoJuego" id="Local" checked>
                         </div>
                     </div>
                     <div class="opcion">
                         <div>
                             <label for="Libre">Libre</label>
-                            <input type="radio" name="modoJuego" id="Libre">
+                            <input type="radio" name="modoJuego" id="Libre" checked>
                         </div>
                         <div>
-                            <label for="FIDE">Libre</label>
+                            <label for="FIDE">FIDE</label>
                             <input type="radio" name="modoJuego" id="FIDE">
                         </div>
                     </div>
-                    <div class="opcion">
+                    <div class="opcion texts">
                         <input type="text" name="name" id="Nombre" placeholder="Nombre provicional">
                         <input type="number" name="name" id="Partida" placeholder="Id de la partida online" disabled>
                     </div>
                     <div class="opcion">
-                        <button>Crear partida</button>
+                        <button id="crear">Crear partida</button>
                     </div>
                 </div>
             </form>

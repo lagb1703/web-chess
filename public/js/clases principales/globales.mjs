@@ -19,18 +19,18 @@ function input(str, tipo){
 
 /*
 *movs se encarga de generar una lista de objetos en los cuales representan los posibles movimientos
-*de la ficha de origen, movs es abrebiatura a movimientos.
+*de la ficha de origen, movs es abreviatura a movimientos.
 */
 class movs{
     
     /*es variable es privada*/
-    __origen = null;
+    __origen = null;/*Esta es una variable que guarda quien realiza la amenza al objeto*/
     /*es variable es privada*/
-    __objeto = null;
+    __objeto = null;/*esta variable guarda el objeto amenazado*/
     /*es variable es privada*/
-    __sgt = null;
+    __sgt = null;/*esta variable guarda el siguiente en la estructura*/
     /*es variable es privada*/
-    __ant = null;
+    __ant = null;/*este variable guarda el anterior de la estructura*/
 
     /** 
     * @public

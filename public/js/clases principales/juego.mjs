@@ -368,7 +368,7 @@ class modoJuego{
 
     imprimirNegro(){
         let tab = document.getElementById("tablero");
-        let ob = [...document.querySelectorAll(".pieza")].filter((pi)=>pi.style.display != "none");
+        let ob = [...document.querySelectorAll(".pieza")];
         ob.map((e)=>{
             tab.removeChild(e);
         });
@@ -423,7 +423,7 @@ class modoJuego{
 
     imprimirBlanco(){
         let tab = document.getElementById("tablero");
-        let ob = [...document.querySelectorAll(".pieza")].filter((pi)=>pi.style.display != "none");
+        let ob = [...document.querySelectorAll(".pieza")];
         ob.map((e)=>{
             tab.removeChild(e);
         });
@@ -473,8 +473,8 @@ class modoJuego{
                 cas = cas.casilla;
             }
         });
-        this.logicaGrafica();
         this.tablero.reverse();
+        this.logicaGrafica();
     }
 
     imprimir(){
@@ -740,56 +740,30 @@ class modoFIDE extends modoJuego{
             }
         });
         for(let i = 0; i < 64; i++){
-            if(tablero[i] instanceof peon){
-                tablero[i].coronar = ()=>{
-                    let p = null;
-                    switch(i%8){
-                        case 0:
-                            p = tablero[56];
-                            break;
-                        case 1:
-                            p = tablero[57];
-                            break;
-                        case 2:
-                            p = tablero[58];
-                            break;
-                        case 3:
-                            p = tablero[59];
-                            break;
-                        case 4:
-                            p = tablero[60];
-                            break;
-                        case 5:
-                            p = tablero[61];
-                            break;
-                        case 6:
-                            p = tablero[62];
-                            break;
-                        case 7:
-                            p = tablero[63];
-                            break;
-                    }
+            if(this.tablero[i] instanceof peon){
+                this.tablero[i].coronar = (p)=>{
                     this.tablero[p.posicion] = p.casilla;
                     let pi = "r";
                     while(pi == "r" || pi == "p"){
                         pi = input("seleccione el tipo de pieza que desea coronar al peon: ", "").toLowerCase();
                         switch(pi){
-                            case "a":
+                            case "alfil":
                                 new alfil(p.posicion, p.color, this.tablero);
                                 break;
-                            case "t":
+                            case "torre":
+                                console.log("pepe");
                                 new torre(p.posicion, p.color, this.tablero);
                                 break;
-                            case "c":
+                            case "caballo":
                                 new caballo(p.posicion, p.color, this.tablero);
                                 break;
-                            case "d":
+                            case "dama":
                                 new dama(p.posicion, p.color, this.tablero);
                                 break;
-                            case "p":
+                            case "peon":
                                 console.error("¿para que quieres convertir un peon en un peon?");
                                 break;
-                            case "r":
+                            case "rey":
                                 console.error("¿para que quieres otro rey?");
                                 break;
                             default:
@@ -797,8 +771,11 @@ class modoFIDE extends modoJuego{
                                 pi = "r";
                         }
                     }
-                    tablero[p.posicion].controlar(this.tablero);
-                    this.imprimir();
+                    this.tablero[p.posicion].amenazas = p.amenazas;
+                    this.tablero[p.posicion].controlar(this.tablero);
+                    setTimeout(()=>{
+                        this.imprimir();
+                    }, 100);
                 }
             }
         }
@@ -890,7 +867,7 @@ class modoFIDE extends modoJuego{
                     if(mov.origen == this.tablero[modoJuego.formatoCoordenadas(destino)]){
                         moverse = false;
                     }
-                    while(mov != null && v){
+                    while(mov != null && moverse){
                         if(modoJuego.formatoCoordenadas(destino) == mov.objeto.posicion){
                             moverse = false;
                             break;
@@ -902,10 +879,14 @@ class modoFIDE extends modoJuego{
             if(moverse){
                 console.error("No puedes mover esa pieza hasta eliminar la amenza del rey");
                 return [];
+            }else{
+                this.jacke = false;
+                return pieza;
             }
         }else{
             pieza.length = 0;
             pieza.push(reyPeligro);
+            this.jacke = false;
             return pieza;
         }
     }
