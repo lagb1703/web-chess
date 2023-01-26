@@ -1,0 +1,108 @@
+.main{
+    height: 77vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main form{
+    display: flex;
+    gap: 3vh;
+    padding: 2vw;
+    flex-direction: column;
+    flex-basis: 15%;
+    height: 55%;
+    border-radius: 20px;
+    border-width: 5px;
+    border-color: var(--color_principal);
+    border-style: solid;
+    align-items: center;
+}
+
+.main form div{
+    width: 90%;
+}
+
+.main form h3{  
+    text-align: center;
+    font-size: 2vw;
+}
+
+.main form div input{
+    padding: 0.5vh 5%;
+    width: 90%;
+    border-radius: 5px;
+    border-color: var(--color_secundario);
+}
+
+.main form i{
+    width: 8.9vw;
+    color: var(--color_principal);
+    font-size: 10vw;
+}
+
+.main form a{
+    color: var(--color_principal);
+}
+
+.main form button{
+    padding: 0.5vh 1vw;
+    background-color: var(--color_principal);
+    color: var(--color_secundario);
+    border-color: none;
+    border-radius: 3px;
+}
+
+#file{
+    font-size: 0.5vw;
+}
+
+@media (max-width:1280px) {
+    .main form{
+        flex-basis: 30%;
+    }
+    .main form i{
+        width: 10.5vw;
+        font-size: 12vw;
+    }
+    .main form h3{  
+        text-align: center;
+        font-size: 3vw;
+    }
+}
+
+@media (max-width:650px) {
+    .main form{
+        flex-basis: 60%;
+    }
+
+    .main form i{
+        width: 26.5vw;
+        font-size: 30vw;
+    }
+    .main form h3{  
+        text-align: center;
+        font-size: 6vw;
+    }
+}
+
+@media (max-width:400px) {
+    .main form{
+        flex-basis: 85%;
+    }
+
+    .main form i{
+        width: 35vw;
+        font-size: 40vw;
+    }
+
+    .main form div input{
+        padding: 1vh 5%;
+        width: 90%;
+    }
+    .main form h3{  
+        text-align: center;
+        font-size: 8vw;
+    }
+}

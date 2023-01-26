@@ -1,0 +1,189 @@
+/*variables*/
+:root{
+    --color_blancos: #ffff;
+    --color_negros: #000001;
+}
+/*etiquetas*/
+
+html{
+    font-family: 'Roboto Mono', monospace;
+}
+
+h1{
+    margin: 0;
+    font-size: 9vw;
+    font-family: 'Raleway', sans-serif;
+}
+
+h2{
+    margin: 0;
+    font-size: 6vw;
+    font-family: 'Raleway', sans-serif;
+}
+
+h3{
+    margin: 0;
+    font-size: 2.6vw;
+}
+input{
+    font-family: 'Raleway', sans-serif;
+}
+a{
+    text-decoration: none;
+    color: var(--color_blancos);
+}
+/*clases*/
+.header{
+    background-color: var(--color_principal);
+    margin: 0;
+    width: 100%;
+    height: 12vh;
+}
+.header nav{
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.header nav a{
+    height: 100%;
+    flex-basis: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.header nav a:hover{
+    background-color: var(--color_blancos);
+    transition: all 0.5s;
+}
+
+.header nav a:hover div i{
+    color: var(--color_principal);
+    transition: all 0.5s;
+}
+
+.header nav a div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header nav a div i{
+    font-size: 5vw;
+}
+
+.footer{
+    background-color: var(--color_secundario);
+    padding: 1vh 0;
+    width: 100%;
+    height: 6vh;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+}
+/*id*/
+#hamburguer{
+    display: none;
+}
+
+@media (max-width:1280px) {
+    .header{
+        height: 12vh;
+    }
+    .footer{
+        height: 7vh;
+    }
+    .header nav a div i{
+        font-size: 4vw;
+    }
+    h1{
+        margin: 0;
+        font-size: 10vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h2{
+        margin: 0;
+        font-size: 7vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h3{
+        margin: 0;
+        font-size: 3.3vw;
+    }
+    p, a, label, input{
+        font-size: 2.5vw;
+    }
+}
+
+@media (max-width:650px) {
+    .header{
+        height: 13.2vh;
+    }
+    .footer{
+        height: 8.2vh;
+    }
+    .header nav a div i{
+        font-size: 8vw;
+    }
+    h1{
+        margin: 0;
+        font-size: 12vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h2{
+        margin: 0;
+        font-size: 9vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h3{
+        margin: 0;
+        font-size: 4.2vw;
+    }
+    p, a, label, input{
+        font-size: 3.2vw;
+    }
+}
+
+@media (max-width: 400px) {
+    h1{
+        margin: 0;
+        font-size: 13.5vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h2{
+        margin: 0;
+        font-size: 10vw;
+        font-family: 'Raleway', sans-serif;
+    }
+    h3{
+        margin: 0;
+        font-size: 5vw;
+    }
+    p, a, label, input{
+        font-size: 4.5vw;
+    }
+    .header{
+        height: 13.2vh;
+    }
+    .footer{
+        height: 8.2vh;
+    }
+    .header nav{
+        justify-content: right;
+        align-items: center;
+    }
+    .header nav a div i{
+        font-size: 12vw;
+    }
+    .header nav a{
+        display: none;
+    }
+    #hamburguer{
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/media/png/icon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" crossorigin="anonymous">
+    <script>
+        function __colorPermanente(){
+            let style = localStorage.getItem("color-preference");
+            if(style != null){
+                style = JSON.parse(localStorage.getItem("color-preference")).style;
+                document.getElementById("color").href = style;
+            }
+        }
+    </script>
+    <link rel="stylesheet" onload="__colorPermanente()" href="/css/estilos/estilo_verde.css" id="color">
+    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <script src="https://kit.fontawesome.com/d4dfd4f8dd.js" crossorigin="anonymous"></script>
+    <title>Usuario</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="/">
+                <div>
+                    <i class="fa-sharp fa-solid fa-chess"></i>
+                </div>
+            </a>
+            <a href="/download/" target="_blank">
+                <div>
+                    <i class="fa-sharp fa-solid fa-download"></i>
+                </div>
+            </a>
+            <a href="https://github.com/lagb1703" target="_blank">
+                <div>
+                    <i class="fa-brands fa-github"></i>
+                </div>
+            </a>
+            <a href="#" id="styles">
+                <div>
+                    <i class="fa-sharp fa-solid fa-droplet"></i>
+                </div>
+            </a>
+            <a href="#vlass" id="hamburguer">
+                <div>
+                    <i class="fa-sharp fa-solid fa-bars"></i>
+                </div>
+            </a>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="usuario">
+            <div>
+                <div>
+                    <img src="/media/png/userDefault.png" alt="" id="imgUser">
+                </div>
+                <h2 id="nameUser">User Name</h2>
+            </div>
+            <div id="partidas">
+                <div class="row_1">
+                    <h4>partidas</h4>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <h3>Dr.lagb</h3>
+    </footer>
+    <script src="/js/styles.js"></script>
+    <script src="/js/user.mjs" type="module"></script>
+</body>
+</html>

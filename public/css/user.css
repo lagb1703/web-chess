@@ -1,0 +1,69 @@
+.main{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+}
+
+.main .usuario{
+    margin: 1.5vh 0;
+    flex-basis: 80%;
+}
+
+.main .usuario div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+
+.main div div div{
+    flex-basis: 30%;
+}
+
+.main div div h2{
+    flex-basis: 60%;
+    color: var(--color_negros);
+}
+
+.main div div div img{
+    min-width: 200px;
+    min-height: 200px;
+    width: 16vw;
+    height: 16vw;
+    border-style: solid;
+    border-width: 5px;
+    border-color: var(--color_principal);
+    border-radius: 50%;
+    background-color: var(--color_secundario);
+}
+
+.main .usuario #partidas{
+    display: block;
+    margin: 1vh 1vw;
+    padding: 1vh 2vw;
+    width: 92%;
+    height: 35.3vh;
+    border-radius: 10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color_principal);
+    scroll-behavior: auto;
+    overflow-y: auto;
+}
+.row_1{
+    background-color: var(--color_secundario);
+    border-radius: 10px;
+}
+
+.row{
+    border-style: solid;
+    padding: 0 3vw;
+    justify-content: space-between !important;
+    border-color: var(--color_negros);
+    border-radius: 3px;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+}
