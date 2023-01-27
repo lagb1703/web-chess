@@ -45,8 +45,10 @@ function iniciarComponentes(){
                 tablero = new modoFIDE(marco.tableroClasico());
             }
         }else{
+            let nombre = document.getElementById("Nombre") || "generico";
+            let id = parseInt(document.getElementById("Partida")) || 0;
             if(!modoJuego){
-                tablero = new onlineLibre(marco.tableroClasico());
+                tablero = new onlineLibre(marco.tableroClasico(), "http://localhost/", nombre);
             }else{
                 alert("modo aun no implementado");
             }
@@ -56,12 +58,44 @@ function iniciarComponentes(){
                 }else{
                     alert("falla en la coneccion")
                 }
-                let nombre = document.getElementById("Nombre") || "generico";
-                let id = documento.getElementById("Partida") || 0;
-                
+                tablero.crearPartida(id, -1).then((e)=>{
+                    tablero.conectarsePartida(e.id).then((json)=>{
+                        if(json.roll == 0){
+                            tablero.imprimirBlanco();
+                        }else{
+                            tablero.imprimirNegro();
+                            tablero.juego();
+                        }
+                    })
+                });
             });
         }
     });
+    document.getElementById("unirsePartida").addEventListener("click", (e)=>{
+        e.preventDefault();
+        let nombre = document.getElementById("Nombre") || "generico";
+        let id = parseInt(document.getElementById("Partida")) || 0;
+        if(!modoJuego){
+            tablero = new onlineLibre(marco.tableroClasico(), "http://localhost/", nombre);
+        }else{
+            alert("modo aun no implementado");
+        }
+        tablero.conection().then(()=>{
+            if(tablero.conectado){
+                console.log("conectado");
+            }else{
+                alert("falla en la coneccion")
+            }
+            tablero.conectarsePartida(id).then((json)=>{
+                if(json.roll == 0){
+                    tablero.imprimirBlanco();
+                }else{
+                    tablero.imprimirNegro();
+                    tablero.juego();
+                }
+            })
+        });
+    })
 }
 
 document.addEventListener("DOMContentLoaded",()=>{

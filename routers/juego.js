@@ -344,8 +344,6 @@ class batallas{
 /*Aca se declara todas las partidas*/
 var juegos = new batallas();
 
-juegos.agregar(new batalla(0, "libre"));
-
 /*
 * el metodo get se utiliza para que el cliente pueda saber si el servidor esta encendido
 */
@@ -361,6 +359,7 @@ router.get("/juego", (s,r)=>{
 */
 router.patch("/juego", (s,r) =>{
     let partida = juegos.buscarId(s.body.id, 0, this.lenth);//se busca la partida por medio del id.
+    console.log(s.body)
     if(partida == null){// se pregunta si la partida existe
         r.send({"comando":"-end"});//le enviamos un comando al usuario para terminar la partida
     }else{
@@ -480,6 +479,7 @@ router.delete("/juego", (s,r)=>{
 * {id:Number, instruccion:String, tipo:String, roll:Number}
 */
 router.post("/juego", (s, r)=>{
+    console.log("creando partida")
     let partida = null; //se separa un espacio de memoria
     if(s.body.id == -1){//se pregunta si quiere un id en especifico
         partida = juegos.agregar(new batalla(0, s.body.tipo));

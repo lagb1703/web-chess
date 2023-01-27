@@ -426,6 +426,7 @@ class modoJuego{
             }
         });
         this.logicaGrafica();
+        this.vista = false;
     }
 
     imprimirBlanco(){
@@ -482,6 +483,7 @@ class modoJuego{
         });
         this.tablero.reverse();
         this.logicaGrafica();
+        this.vista = true;
     }
 
     imprimir(){
@@ -600,6 +602,7 @@ class modoLibre extends modoJuego{
                 }
                 document.addEventListener('mousemove', onMouseMove);
                 cas.onmouseup = function(e) {
+                    document.getElementById("tablero").append(cas);
                     document.removeEventListener('mousemove', onMouseMove);
                     cas.onmouseup = null;
                     if(e.clientX > bounds.left + bounds.width 
@@ -1061,15 +1064,19 @@ class online extends modoJuego{
         return this.comandos(comando).then(async (op)=>{
             if(op != undefined){
                 if(op[1] && this.permitir){
-                    console.clear();
                     this.imprimir();
                     await this.comandoOnline(this.id, op[2]).then((cmd)=>{
+                        console.log(cmd);
                         if(cmd != undefined)
                             this.comandos(cmd).then((op)=>{
-                                if(op != undefined)
+                                if(op != undefined){
+                                    if(op[0]){
+                                        this.turno += 1;
+                                    }
                                     if(op[1] && op[2][0] == "-"){
                                         this.comandoOnline(this.id, op[2]);
                                     }
+                                }
                             });
                     });
                 }
@@ -1203,6 +1210,7 @@ class online extends modoJuego{
                 "Content-type": "application/json; charset=UTF-8"
             }
         }).then(res => {
+            console.log(res)
             if(res != undefined){
                 if(res.status == 200)
                     res = res.json();
@@ -1248,12 +1256,15 @@ class onlineLibre extends online{
                 }
                 document.addEventListener('mousemove', onMouseMove);
                 cas.onmouseup = function(e) {
+                    document.getElementById("tablero").append(cas);
                     document.removeEventListener('mousemove', onMouseMove);
                     cas.onmouseup = null;
                     if(e.clientX > bounds.left + bounds.width 
                         || e.clientX < bounds.left 
                         || e.clientY < bounds.top 
-                        || e.clientY > bounds.top + bounds.height){
+                        || e.clientY > bounds.top + bounds.height
+                        || t.roll != t.turno%2){
+                        alert("espera tu turno")
                         cas.style.left = coorPiezas[3];
                         cas.style.top = coorPiezas[2];
                         return;
@@ -1272,6 +1283,7 @@ class onlineLibre extends online{
                     });
                     let coor1 = (t.vista)?63-((coorPiezas[0] - 1)+(coorPiezas[1]-1)*8):(coorPiezas[0] - 1)+(coorPiezas[1]-1)*8;
                     let coor2 = (t.vista)?63-((x - 1)+(y-1)*8):(x - 1)+(y-1)*8;
+                    console.log("mv " + coor1+ " " + coor2, t.vista);
                     t.comando("mv " + coor1+ " " + coor2);
                 };
               };
@@ -1279,92 +1291,112 @@ class onlineLibre extends online{
     }
 
     comandos(comando){
-        let cmd = comando.split(" ");
-        console.log(cmd)
-        try{
-            switch(cmd[0]){
-                case "mv":
-                    switch(cmd.length){
-                        case 2:
-                            let coor = cmd[1];
-                            let m = coor[1] + coor[2];
-                            if(coor.length == 2){
-                                coor = "?" + coor;
-                            }else if(coor[0] != "?"){
-                                m = coor[1] + coor[2];
-                                coor = coor[0];
-                            }else if (coor.length == 1){
-                                console.error("formato de coordenadas incorrecto");
-                                return false;
-                            }
-                            let pieza = this.buscarPieza(coor);
-                            if(pieza.length > 0){
-                                if(coor[0] != "?"){
-                                    let i = pieza.length - 1;
-                                    while(i >= 0){
-                                        if(pieza[i].validar(modoJuego.formatoCoordenadas(m), this.tablero)){
-                                            pieza[i].mover(modoJuego.formatoCoordenadas(m), this.tablero);
-                                            break;
+        return new Promise((solve, reject)=>{
+            let cmd = comando.split(" ");
+            try{
+                switch(cmd[0]){
+                    case "mv":
+                        switch(cmd.length){
+                            case 2:
+                                let coor = cmd[1];
+                                let m = coor[1] + coor[2];
+                                if(coor.length == 2){
+                                    coor = "?" + coor;
+                                }else if(coor[0] != "?"){
+                                    m = coor[1] + coor[2];
+                                    coor = coor[0];
+                                }else if (coor.length == 1){
+                                    console.error("formato de coordenadas incorrecto");
+                                    return false;
+                                }
+                                let pieza = this.buscarPieza(coor);
+                                if(pieza.length > 0){
+                                    if(coor[0] != "?"){
+                                        let i = pieza.length - 1;
+                                        while(i >= 0){
+                                            if(pieza[i].validar(modoJuego.formatoCoordenadas(m), this.tablero)){
+                                                pieza[i].mover(modoJuego.formatoCoordenadas(m), this.tablero);
+                                                break;
+                                            }
+                                            i--;
                                         }
-                                        i--;
+                                    }else{
+                                        pieza[0].mover(modoJuego.formatoCoordenadas(parseInt(m)), this.tablero);
                                     }
                                 }else{
-                                    pieza[0].mover(modoJuego.formatoCoordenadas(parseInt(m)), this.tablero);
+                                    console.error("Pieza no encontrada");
+                                    reject();
                                 }
-                            }else{
-                                console.error("Pieza no encontrada");
-                                return false;
-                            }
-                            break;
-                        case 3:
-                            let origen = cmd[1];
-                            let destino = cmd[2];
-                            let piezas = this.buscarPieza(origen);
-                            if(piezas.length == 0){
-                                console.error("Pieza no encontrada");
-                                return false;
-                            }
-                            switch(destino.length){
-                                case 1:
-                                    let pieza = this.buscarPieza(origen);
-                                    if(pieza.length == 0){
-                                        console.error("Pieza no encontrada");
-                                        return false;
-                                    }
-                                    for(let i = pieza.length-1; i >= 0; i--){
-                                        if(piezas[0].validar(pieza[0].posicion, this.tablero)){
-                                            piezas[0].mover(pieza[0].posicion, this.tablero);
-                                            break;
+                                break;
+                            case 3:
+                                let origen = cmd[1];
+                                let destino = cmd[2];
+                                let piezas = this.buscarPieza(origen);
+                                if(piezas.length == 0){
+                                    console.error("Pieza no encontrada");
+                                    reject();
+                                }
+                                switch(destino.length){
+                                    case 1:
+                                        let pieza = this.buscarPieza(origen);
+                                        if(pieza.length == 0){
+                                            console.error("Pieza no encontrada");
+                                            reject();
                                         }
-                                    }
-                                    break;
-                                case 2:
-                                    piezas[0].mover(modoJuego.formatoCoordenadas(destino), this.tablero);
-                                    break;
-                                case 3:
-                                    let p = this.buscarPieza(origen);
-                                    if(p.length == 0){
-                                        console.error("Pieza no encontrada");
-                                    }
-                                    for(let i = piezas.length; i >= 0; i--){
-                                        if(piezas[i].validar(p[0].posicion, this.tablero)){
-                                            piezas[i].mover(p[0].posicion, this.tablero);
+                                        for(let i = pieza.length-1; i >= 0; i--){
+                                            if(piezas[0].validar(pieza[0].posicion, this.tablero)){
+                                                piezas[0].mover(pieza[0].posicion, this.tablero);
+                                                break;
+                                            }
                                         }
-                                    }
-                                    break;
-                            }
-                            break;
-                        default:
-                            console.error("mv requiere unicamente un paraametro, maximo dos");
-                    }
-                    break;
-                default:
-                    return super.comandos(comando);
+                                        break;
+                                    case 2:
+                                        piezas[0].mover(modoJuego.formatoCoordenadas(destino), this.tablero);
+                                        break;
+                                    case 3:
+                                        let p = this.buscarPieza(origen);
+                                        if(p.length == 0){
+                                            console.error("Pieza no encontrada");
+                                            reject();
+                                        }
+                                        for(let i = piezas.length; i >= 0; i--){
+                                            if(piezas[i].validar(p[0].posicion, this.tablero)){
+                                                piezas[i].mover(p[0].posicion, this.tablero);
+                                            }
+                                        }
+                                        break;
+                                }
+                                break;
+                            default:
+                                console.error("mv requiere unicamente un paraametro, maximo dos");
+                        }
+                        break;
+                    default:
+                        //return super.comandos(comando);
+                        reject();
+                }
+                solve([true, true, comando]);
+            }catch(e){
+                console.error("perdon error interno", e);
+                reject();
             }
-            return true;
-        }catch(e){
-            console.error("perdon error interno", e);
-        }
+        });
+    }
+
+    async juego(){
+        await this.comandoOnline(this.id,"").then(async (e)=>{
+            await this.comandos(e).then((op)=>{
+                if(op != undefined){
+                    if(op[0]){
+                        this.turno += 1;
+                    }
+                    if(op[1] && op[2][0] == "-"){
+                        this.comandoOnline(this.id, op[2]);
+                    }
+                }
+            })
+            this.imprimir();
+        });
     }
 }
 
