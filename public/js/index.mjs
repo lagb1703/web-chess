@@ -45,7 +45,21 @@ function iniciarComponentes(){
                 tablero = new modoFIDE(marco.tableroClasico());
             }
         }else{
-            alert("funcion no implementada");
+            if(!modoJuego){
+                tablero = new onlineLibre(marco.tableroClasico());
+            }else{
+                alert("modo aun no implementado");
+            }
+            tablero.conection().then(()=>{
+                if(tablero.conectado){
+                    console.log("conectado");
+                }else{
+                    alert("falla en la coneccion")
+                }
+                let nombre = document.getElementById("Nombre") || "generico";
+                let id = documento.getElementById("Partida") || 0;
+                
+            });
         }
     });
 }
