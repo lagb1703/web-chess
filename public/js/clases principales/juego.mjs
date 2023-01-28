@@ -761,7 +761,6 @@ class modoFIDE extends modoJuego{
                                 new alfil(p.posicion, p.color, this.tablero);
                                 break;
                             case "torre":
-                                console.log("pepe");
                                 new torre(p.posicion, p.color, this.tablero);
                                 break;
                             case "caballo":
@@ -1045,34 +1044,19 @@ class online extends modoJuego{
         }
         super(tablero);
         this.url = url;
-        /*let n = 0;
-        let id = setInterval(()=>{
-            if(this.conectado){
-                this.init();
-                clearInterval(id);
-            }else if(n < 10){
-                n += 1;
-            }else{
-                this.manejoError("no se pudo conectar al servidor");
-                clearInterval(id);
-            }
-        }, 1000)
-        this.conection(id);*/
     }
 
     comando(comando){
         return this.comandos(comando).then(async (op)=>{
             if(op != undefined){
-                if(op[1] && this.permitir){
+                if(op[1]){
                     this.imprimir();
+                    this.turno += 1;
                     await this.comandoOnline(this.id, op[2]).then((cmd)=>{
-                        console.log(cmd);
                         if(cmd != undefined)
                             this.comandos(cmd).then((op)=>{
+                                console.log(op)
                                 if(op != undefined){
-                                    if(op[0]){
-                                        this.turno += 1;
-                                    }
                                     if(op[1] && op[2][0] == "-"){
                                         this.comandoOnline(this.id, op[2]);
                                     }
@@ -1082,7 +1066,6 @@ class online extends modoJuego{
                 }
                 if(op[0]){
                     this.turno += 1;
-                    console.clear();
                     this.imprimir();
                 }
             }
@@ -1210,7 +1193,6 @@ class online extends modoJuego{
                 "Content-type": "application/json; charset=UTF-8"
             }
         }).then(res => {
-            console.log(res)
             if(res != undefined){
                 if(res.status == 200)
                     res = res.json();
@@ -1283,7 +1265,6 @@ class onlineLibre extends online{
                     });
                     let coor1 = (t.vista)?63-((coorPiezas[0] - 1)+(coorPiezas[1]-1)*8):(coorPiezas[0] - 1)+(coorPiezas[1]-1)*8;
                     let coor2 = (t.vista)?63-((x - 1)+(y-1)*8):(x - 1)+(y-1)*8;
-                    console.log("mv " + coor1+ " " + coor2, t.vista);
                     t.comando("mv " + coor1+ " " + coor2);
                 };
               };

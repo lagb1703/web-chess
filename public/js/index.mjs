@@ -45,8 +45,9 @@ function iniciarComponentes(){
                 tablero = new modoFIDE(marco.tableroClasico());
             }
         }else{
-            let nombre = document.getElementById("Nombre") || "generico";
-            let id = parseInt(document.getElementById("Partida")) || 0;
+            let nombre = document.getElementById("Nombre").value || "generico";
+            let id = parseInt(document.getElementById("Partida").value) || 0;
+            console.log(id)
             if(!modoJuego){
                 tablero = new onlineLibre(marco.tableroClasico(), "http://localhost/", nombre);
             }else{
@@ -60,6 +61,9 @@ function iniciarComponentes(){
                 }
                 tablero.crearPartida(id, -1).then((e)=>{
                     tablero.conectarsePartida(e.id).then((json)=>{
+                        console.log(e.id)
+                        document.getElementById("crearPartida").disabled = true;
+                        document.getElementById("unirsePartida").disabled = true;
                         if(json.roll == 0){
                             tablero.imprimirBlanco();
                         }else{
@@ -73,8 +77,9 @@ function iniciarComponentes(){
     });
     document.getElementById("unirsePartida").addEventListener("click", (e)=>{
         e.preventDefault();
-        let nombre = document.getElementById("Nombre") || "generico";
-        let id = parseInt(document.getElementById("Partida")) || 0;
+        let nombre = document.getElementById("Nombre").value || "generico";
+        let id =  parseInt(document.getElementById("Partida").value) || 0;
+        console.log(id)
         if(!modoJuego){
             tablero = new onlineLibre(marco.tableroClasico(), "http://localhost/", nombre);
         }else{
@@ -87,6 +92,9 @@ function iniciarComponentes(){
                 alert("falla en la coneccion")
             }
             tablero.conectarsePartida(id).then((json)=>{
+                console.log(e.id)
+                document.getElementById("crearPartida").disabled = true;
+                document.getElementById("unirsePartida").disabled = true;
                 if(json.roll == 0){
                     tablero.imprimirBlanco();
                 }else{

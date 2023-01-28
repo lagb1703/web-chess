@@ -162,7 +162,7 @@ class batalla {
 class batallas{
 
     /*Aca se guarda el numero de batallas activas*/
-    lenth = 0;
+    length = 0;
 
     /*Aca se guarda la raiz de la lista*/
     batalla = null;
@@ -182,7 +182,7 @@ class batallas{
             batalla.siguiente = null;
             batalla.anterior = null;
             this.batalla = batalla;
-            this.lenth += 1;
+            this.length += 1;
             return batalla;
         }else{
             let auxiliar = this.batalla;
@@ -208,7 +208,7 @@ class batallas{
                }
                auxiliar.anterior = batalla;
             }
-            this.lenth += 1;
+            this.length += 1;
             return batalla;
         }
     }
@@ -223,11 +223,11 @@ class batallas{
      * devolvera verdadero, sino lo logra, sera falso.
      */
     eliminar(id){
-        let auxiliar = this.buscarId(id, 0, this.lenth);
+        let auxiliar = this.buscarId(id, 0, this.length);
         if(auxiliar.id != id){
             return false;
         }
-        this.lenth -= 1;
+        this.length -= 1;
         if(auxiliar.siguiente == null && auxiliar.anterior == null){
             this.batalla = null;
             return true;
@@ -254,7 +254,7 @@ class batallas{
      * @description devuelve la batalla en la posicion indicada, ojo no el id, sino la posicion en la lista
      */
     ir(pos){
-        if(pos > this.lenth){
+        if(pos > this.length){
             throw new Error("desborde de lista");
         }
         let auxiliar = this.batalla;
@@ -275,8 +275,6 @@ class batallas{
      * @description esta funcion busca por medio de busqueda binaria la batalla con el id indicado
      */
     buscarId(id, inicio, final){
-        final = final || this.lenth;
-        inicio = inicio || 0;
         let medio = Math.floor((final + inicio)/2);
         let go = this.ir(medio);
         if(go != undefined){
@@ -340,7 +338,6 @@ class batallas{
         return;
     }
 }
-
 /*Aca se declara todas las partidas*/
 var juegos = new batallas();
 
@@ -358,7 +355,7 @@ router.get("/juego", (s,r)=>{
 * {id:Number, comando:String}
 */
 router.patch("/juego", (s,r) =>{
-    let partida = juegos.buscarId(s.body.id, 0, this.lenth);//se busca la partida por medio del id.
+    let partida = juegos.buscarId(s.body.id, 0, juegos.length);//se busca la partida por medio del id.
     console.log(s.body)
     if(partida == null){// se pregunta si la partida existe
         r.send({"comando":"-end"});//le enviamos un comando al usuario para terminar la partida
@@ -420,11 +417,12 @@ router.patch("/juego", (s,r) =>{
 * {id:Number, nombre:String, tipo:String}
 */
 router.put("/juego", (s, r)=>{
+    console.log(s.body)
     let partida = null;//se separa un espacio en memoria
     if(s.body.id == -1){//se verifica si el usuario quiere encontrar partida con id o con status
         partida = juegos.buscarPartida(s.body.tipo);//se buscara partida por estatus y tipo
     }else{
-        partida = juegos.buscarId(s.body.id, 0, juegos.lenth);//se busca por id
+        partida = juegos.buscarId(s.body.id, 0, juegos.length);//se busca por id
     }
     if(partida == null){//se pregunta si no encontro alguna batalla
         r.sendStatus(404);//se envia un not found al usuario
@@ -458,7 +456,7 @@ router.put("/juego", (s, r)=>{
 * {id:Number, instruccion:String}
 */
 router.delete("/juego", (s,r)=>{
-    let partida = juegos.buscarId(s.body.id, 0, juegos.lenth);
+    let partida = juegos.buscarId(s.body.id, 0, juegos.length);
     if(partida == null){
         r.sendStatus(404);
         return;
